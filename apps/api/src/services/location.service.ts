@@ -2,7 +2,6 @@ import { LocationRepository } from '@/repositories/location.repository';
 import { responseWithData } from '@/utils/response';
 import { LOcationValidation } from '@/validators/locationvalidation';
 import { Validation } from '@/validators/validation';
-import axios from 'axios';
 
 export class LocationService {
   static async getProvinces() {

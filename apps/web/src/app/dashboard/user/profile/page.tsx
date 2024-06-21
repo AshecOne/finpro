@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import axios from 'axios';
 import Link from 'next/link';
 import {
   Button,
@@ -8,7 +7,6 @@ import {
   Typography,
   Container,
   Grid,
-  TextField,
   Modal,
   Backdrop,
   Fade,
@@ -66,8 +64,6 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
     }
   }, [dataAddress]);
 
-  console.log('Is loading:', isLoading); // Tambahkan log ini untuk debugging
-
   return (
     <Box
       sx={{
@@ -93,7 +89,7 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
                 <Skeleton variant="circular" width={150} height={150} />
               ) : data?.image ? (
                 <img
-                  src={`http://localhost:8000/${data.image}`}
+                  src={process.env.NEXT_PUBLIC_BASE_API_URL + `${data.image}`}
                   alt="Profile"
                   width={150}
                   height={150}

@@ -23,7 +23,6 @@ export default async function VerifyPage({ params }: Props) {
     const res = await axiosInstance.patch('/users/activation-email', {
       token: params.token,
     });
-    console.log(res.data);
   } catch (error) {
     return <TokenExpired />;
   }

@@ -59,9 +59,6 @@ export default function AddressForm() {
   const { data: cities, isLoading: isLoadingCities } =
     useFetchCities(selectedProvince);
 
-  console.log(provinces);
-  console.log(cities);
-
   //NGAMBIL MUTATION
   const { mutateAsync: addAddressMutateAsync, isPending: isADdPending } =
     useAddAddress();
@@ -98,12 +95,12 @@ export default function AddressForm() {
         flexDirection: 'column',
         gap: '10px',
         maxWidth: '400px',
-        margin: 'auto', // Untuk menengahkan form di tengah halaman
-        mt: '50px', // Atur margin top sesuai kebutuhan
-        p: '20px', // Padding untuk form
-        border: '1px solid #ccc', // Contoh gaya border
-        borderRadius: '8px', // Contoh gaya border radius
-        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', // Contoh gaya box shadow
+        margin: 'auto', 
+        mt: '50px', 
+        p: '20px', 
+        border: '1px solid #ccc', 
+        borderRadius: '8px', 
+        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', 
       }}
     >
       <Typography variant="h4" gutterBottom>
