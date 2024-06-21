@@ -44,8 +44,8 @@ export default class App {
     this.app.use('/samples', sampleRouter.getRouter());
     this.app.use('/auth', authRouter.getRouter());
     this.app.use('/users', userRouter.getRouter());
-    this.app.use('/address', addressRouter.getRouter());
-    this.app.use('/location', locationRouter.getRouter());
+    this.app.use('/addresses', addressRouter.getRouter());
+    this.app.use('/locations', locationRouter.getRouter());
   }
 
   public start(): void {

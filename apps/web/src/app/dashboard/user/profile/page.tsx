@@ -35,7 +35,6 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
     token || '',
   );
   const { data, error, isLoading } = useGetProfileById(token || '');
-  console.log(data);
 
   const [dataUser, setDataUser] = React.useState<any>([]);
   const [open, setOpen] = React.useState(false);

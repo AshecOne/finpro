@@ -3,30 +3,29 @@ import axiosInstance from '@/utils/axiosInstance';
 import { LocationBody, LocationName } from './type';
 
 export const getProvince = async () => {
-  const res =
-    await axiosInstance.get<ResponseWithData<LocationBody[]>>(
-      'location/province',
-    );
+  const res = await axiosInstance.get<ResponseWithData<LocationBody[]>>(
+    '/locations/province',
+  );
   return res.data.result;
 };
 
 export const getCities = async (provinceId: string) => {
   const res = await axiosInstance.get<ResponseWithData<LocationBody[]>>(
-    `location/${provinceId}`,
+    `/locations/${provinceId}`,
   );
   return res.data.result;
 };
 
-export const getProvinceName = async (provinceId: string) =>{
+export const getProvinceName = async (provinceId: string) => {
   const res = await axiosInstance.get<ResponseWithData<LocationName[]>>(
-    `location/province/${provinceId}`,
+    `/locations/province/${provinceId}`,
   );
   return res.data.result[0];
-}
+};
 
-export const getCityName = async (cityId: string) =>{
+export const getCityName = async (cityId: string) => {
   const res = await axiosInstance.get<ResponseWithData<LocationName[]>>(
-    `location/city/${cityId}`,
+    `/locations/city/${cityId}`,
   );
   return res.data.result;
-}
+};

@@ -5,7 +5,7 @@ import { Token } from '@mui/icons-material';
 import { AddressRequest } from './type';
 export const getAddressById = async (token: string) => {
   const res = await axiosInstance.get<ResponseWithData<AddressBody[]>>(
-    '/address',
+    '/addresses',
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -21,7 +21,7 @@ export const getAddressByAddressId = async (
   addressId: string,
 ) => {
   const res = await axiosInstance.get<ResponseWithData<AddressBody>>(
-    `/address/${addressId}`,
+    `/addresses/${addressId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ export const getAddressByAddressId = async (
 
 export const deleteAddress = async ({ token, addressId }: AddressRequest) => {
   const res = await axiosInstance.delete<ResponseWithoutData>(
-    `/address/${addressId}`,
+    `/addresses/${addressId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ export const updateAddress = async ({
   data,
 }: UpdateAddress) => {
   const res = await axiosInstance.patch<ResponseWithoutData>(
-    `/address/${addressId}`,
+    `/addresses/${addressId}`,
     data,
     {
       headers: {
@@ -64,7 +64,7 @@ export const updateAddress = async ({
 
 export const addAddress = async ({ token, addressData }: CreateAddress) => {
   const res = await axiosInstance.post<ResponseWithoutData>(
-    `/address`,
+    `/addresses`,
     addressData,
     {
       headers: {
