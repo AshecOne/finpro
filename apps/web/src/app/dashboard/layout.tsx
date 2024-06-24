@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 // MUI Components
@@ -22,11 +23,16 @@ import Drawer from '@mui/material/Drawer';
 // MUI Icons
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import { SxProps } from '@mui/material/styles';
+import { SxProps, alpha } from '@mui/material/styles';
 
-import { dashboardAdminPages } from '@/utils/routes';
-import SimpleBar from 'simplebar-react';
+// Custom Components
 import Logo from '@/components/core/Logo';
+import { authPages, dashboardAdminPages } from '@/utils/routes';
+import SimpleBar from 'simplebar-react';
+
+// NextAuth
+import { useSession, signOut } from 'next-auth/react';
+import { UserSession } from '@/features/types';
 
 const stickyBox: SxProps = {
   pl: 2,
@@ -38,7 +44,7 @@ const stickyBox: SxProps = {
   bgcolor: 'white',
 };
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 const menus = Object.keys(dashboardAdminPages).map((key) => {
   const { path, label, Icon } = dashboardAdminPages[key];
   return { path, label, Icon };
@@ -51,6 +57,12 @@ type Props = {
 export default function DashboardLayout({ children }: Props) {
   const [open, setOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const router = useRouter();
+  const session = useSession();
+  const user = session.data?.user as UserSession;
+  const userImage =
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}${user?.image}` || '';
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -69,11 +81,22 @@ export default function DashboardLayout({ children }: Props) {
       <Box sx={stickyBox}>
         <Logo />
       </Box>
-      <List>
+      <List dense={true}>
         {menus.map((menu, index) => (
-          <ListItem key={index} disablePadding>
+          <ListItem
+            key={index}
+            disablePadding
+            onClick={() => router.push(menu.path)}
+            sx={{
+              '&:hover': {
+                bgcolor: (theme) => alpha(theme.palette.primary.light, 0.3),
+              },
+            }}
+          >
             <ListItemButton>
-              <ListItemIcon>{<menu.Icon />}</ListItemIcon>
+              <ListItemIcon sx={{ minWidth: '30px' }}>
+                {<menu.Icon sx={{ fontSize: '18px' }} />}
+              </ListItemIcon>
               <ListItemText primary={menu.label} />
             </ListItemButton>
           </ListItem>
@@ -106,10 +129,7 @@ export default function DashboardLayout({ children }: Props) {
             <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="example@mail.com"
-                    src="/static/images/avatar/2.jpg"
-                  />
+                  <Avatar alt={user?.username} src={userImage} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -133,6 +153,16 @@ export default function DashboardLayout({ children }: Props) {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem>
+                  <Typography
+                    textAlign="center"
+                    onClick={() =>
+                      signOut({ callbackUrl: authPages.login.path })
+                    }
+                  >
+                    Logout
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

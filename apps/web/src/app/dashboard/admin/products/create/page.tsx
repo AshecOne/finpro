@@ -1,17 +1,17 @@
 import DashboardBreadcrumbs from '@/components/core/DashboardBreadcrumbs';
-import { CategoryFormCreate } from '@/components/form/CategoryForm';
+import { ProductFormCreate } from '@/components/form/ProductForm';
 import { dashboardAdminPages } from '@/utils/routes';
 import Box from '@mui/material/Box';
 
-export default function CategoryCreatePage() {
+export default function ProductCreatePage() {
   return (
     <>
       <DashboardBreadcrumbs
-        route={dashboardAdminPages.category}
+        route={dashboardAdminPages.product}
         action="Create"
       />
       <Box sx={{ maxWidth: '100%', mt: 2 }}>
-        <CategoryFormCreate />
+        <ProductFormCreate />
       </Box>
     </>
   );

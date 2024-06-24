@@ -1,18 +1,18 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import {
-  getCategories,
-  getCategory,
-} from '@/features/admin/categories/categoriesFetchers';
+  getProduct,
+  getProducts,
+} from '@/features/admin/products/productsFetchers';
 import { MRT_PaginationState, MRT_SortingState } from 'material-react-table';
 
-export const useGetCategories = (
+export const useGetProducts = (
   globalFilter: string,
   pagination: MRT_PaginationState,
   sorting: MRT_SortingState,
 ) => {
   return useQuery({
     queryKey: [
-      'categories',
+      'products',
       globalFilter,
       pagination.pageIndex,
       pagination.pageSize,
@@ -27,10 +27,15 @@ export const useGetCategories = (
         s.desc ? (orderBy = 'desc') : 'asc';
       });
 
-      const res = await getCategories({
+      let newFilter: string | number = globalFilter;
+      if (globalFilter !== '') {
+        !isNaN(Number(globalFilter)) && (newFilter = Number(newFilter));
+      }
+
+      const res = await getProducts({
         page: pagination.pageIndex + 1,
         limit: pagination.pageSize,
-        filter: globalFilter ?? '',
+        filter: newFilter,
         sortBy,
         orderBy,
       });
@@ -41,11 +46,11 @@ export const useGetCategories = (
   });
 };
 
-export const useGetCategory = (id: string) => {
+export const useGetProduct = (id: string) => {
   return useQuery({
-    queryKey: ['category', id],
+    queryKey: ['product', id],
     queryFn: async () => {
-      return await getCategory(id);
+      return await getProduct(id);
     },
   });
 };

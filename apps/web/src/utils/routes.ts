@@ -1,5 +1,7 @@
 import CategoryIcon from '@mui/icons-material/Category';
 import UserIcon from '@mui/icons-material/Person';
+import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 export type Route = {
   path: string;
@@ -28,7 +30,12 @@ export const dashboardAdminPages: Record<string, Route> = {
   category: {
     path: '/dashboard/admin/categories',
     label: 'Category',
-    Icon: CategoryIcon,
+    Icon: SellOutlinedIcon,
+  },
+  product: {
+    path: '/dashboard/admin/products',
+    label: 'Product',
+    Icon: ShoppingCartOutlinedIcon,
   },
   user: {
     path: '/dashboard/admin/users',

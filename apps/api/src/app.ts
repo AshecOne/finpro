@@ -1,15 +1,16 @@
 import express, { json, urlencoded, Express, Request, Response } from 'express';
 import cors from 'cors';
-import { PORT } from './config';
+import { PORT } from '@/config';
 import { join } from 'path';
-import { ErrorMiddleware } from './middlewares/error.middleware';
-import { SampleRouter } from './routers/sample.router';
+import { ErrorMiddleware } from '@/middlewares/error.middleware';
+import { SampleRouter } from '@/routers/sample.router';
 import { AuthRouter } from '@/routers/auth.router';
 import { CategoryRouter } from '@/routers/category.router';
 import { UserRouter } from './routers/user.router';
 import { AddressRouter } from './routers/address.router';
 import { LocationRouter } from './routers/location.router';
 import { AdminRouter } from './routers/admin.router';
+import { ProductRouter } from '@/routers/product.router';
 
 export default class App {
   private app: Express;
@@ -39,6 +40,7 @@ export default class App {
     const addressRouter = new AddressRouter();
     const locationRouter = new LocationRouter();
     const adminRouter = new AdminRouter();
+    const productRouter = new ProductRouter();
 
     this.app.get('/', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student !`);
@@ -52,6 +54,7 @@ export default class App {
     this.app.use('/addresses', addressRouter.getRouter());
     this.app.use('/locations', locationRouter.getRouter());
     this.app.use('/admin', adminRouter.getRouter());
+    this.app.use('/products', productRouter.getRouter());
   }
 
   public start(): void {
