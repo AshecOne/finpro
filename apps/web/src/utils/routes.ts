@@ -1,4 +1,5 @@
 import CategoryIcon from '@mui/icons-material/Category';
+import UserIcon from '@mui/icons-material/Person';
 
 export type Route = {
   path: string;
@@ -28,6 +29,11 @@ export const dashboardAdminPages: Record<string, Route> = {
     path: '/dashboard/admin/categories',
     label: 'Category',
     Icon: CategoryIcon,
+  },
+  user: {
+    path: '/dashboard/admin/users',
+    label: 'User',
+    Icon: UserIcon,
   },
 };
 

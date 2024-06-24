@@ -9,6 +9,7 @@ import { CategoryRouter } from '@/routers/category.router';
 import { UserRouter } from './routers/user.router';
 import { AddressRouter } from './routers/address.router';
 import { LocationRouter } from './routers/location.router';
+import { AdminRouter } from './routers/admin.router';
 
 export default class App {
   private app: Express;
@@ -37,6 +38,7 @@ export default class App {
     const userRouter = new UserRouter();
     const addressRouter = new AddressRouter();
     const locationRouter = new LocationRouter();
+    const adminRouter = new AdminRouter();
 
     this.app.get('/', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student !`);
@@ -49,6 +51,7 @@ export default class App {
     this.app.use('/users', userRouter.getRouter());
     this.app.use('/addresses', addressRouter.getRouter());
     this.app.use('/locations', locationRouter.getRouter());
+    this.app.use('/admin', adminRouter.getRouter());
   }
 
   public start(): void {
