@@ -16,12 +16,12 @@ export const useGetUsers = (
       sorting,
     ],
     queryFn: async () => {
-      let sortBy = 'name';
+      let sortBy = 'email';
       let orderBy = 'asc';
 
       sorting.forEach((s) => {
-        s.id ? (sortBy = s.id) : 'name';
-        s.desc ? (orderBy = 'desc') : 'asc';
+        if (s.id) sortBy = s.id;
+        if (s.desc) orderBy = 'desc';
       });
 
       const res = await getUsers({
