@@ -62,8 +62,8 @@ export class UserValidation {
   });
   static QUERY = z.object({
     filter: z.string().optional(),
-    limit: z.number().int().optional(),
-    page: z.number().int().optional(),
+    limit: z.coerce.number().int().optional(),
+    page: z.coerce.number().int().optional(),
     sortBy: z.string().optional(),
     orderBy: z.enum(['asc', 'desc']).optional(),
   });

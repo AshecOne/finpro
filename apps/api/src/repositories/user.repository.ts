@@ -91,7 +91,7 @@ export class UserRepository {
     const { filter, limit, page, sortBy, orderBy } = query;
 
     const where = {
-      OR: [{ name: { contains: filter } }, { email: { contains: filter } }],
+      OR: [{ username: { contains: filter } }, { email: { contains: filter } }],
     };
 
     const users = await prisma.user.findMany({
@@ -99,7 +99,7 @@ export class UserRepository {
       take: Number(limit) || 10,
       skip: ((Number(page) || 1) - 1) * (Number(limit) || 10),
       orderBy: {
-        [sortBy || 'name']: orderBy || 'asc',
+        [sortBy || 'email']: orderBy || 'asc',
       },
     });
 
@@ -108,7 +108,7 @@ export class UserRepository {
 
   static async countUsers(filter: string) {
     const where = {
-      OR: [{ name: { contains: filter } }, { email: { contains: filter } }],
+      OR: [{ username: { contains: filter } }, { email: { contains: filter } }],
     };
 
     return await prisma.user.count({ where });

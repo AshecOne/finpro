@@ -5,11 +5,12 @@ import {
   ResponseWithoutData,
 } from '@/features/types';
 import { createAxiosInstance } from '@/utils/axiosInstance';
+import { UserResponse } from './types';
 import { AdminUserSchema } from '@/components/form/schemas/adminUserSchema';
 
 export const getUsers = async (params: QueryPagination) => {
   const instance = await createAxiosInstance();
-  const res = await instance.get<ResponseDataPagination<AdminUserSchema[]>>(
+  const res = await instance.get<ResponseDataPagination<UserResponse[]>>(
     '/admin/users',
     { params },
   );
@@ -26,7 +27,7 @@ export const createUser = async (data: AdminUserSchema) => {
 
 export const getUserById = async (id: number) => {
   const instance = await createAxiosInstance();
-  const res = await instance.get<ResponseWithData<AdminUserSchema>>(
+  const res = await instance.get<ResponseWithData<UserResponse>>(
     `/admin/users/${id}`,
   );
 

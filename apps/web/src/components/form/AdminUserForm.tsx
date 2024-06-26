@@ -19,7 +19,7 @@ import {
 import { dashboardAdminPages } from '@/utils/routes';
 
 const defaultValues: AdminUserSchema = {
-  name: '',
+  username: '',
   email: '',
   password: '',
 };
@@ -57,6 +57,7 @@ export default function AdminUserForm({ mode }: AdminUserFormProps) {
   }
 
   const onSubmit = async (data: AdminUserSchema) => {
+    console.log('Data yang dikirim:', data);
     if (isUpdateMode) {
       await updateAdminUserMutation.mutateAsync({ ...data, id: userId });
     } else {
@@ -79,15 +80,15 @@ export default function AdminUserForm({ mode }: AdminUserFormProps) {
       >
         <Controller
           control={control}
-          name="name"
+          name="username"
           render={({ field, fieldState: { error } }) => (
             <TextField
               fullWidth
               required
               size="small"
-              label="Name"
+              label="Username"
               variant="outlined"
-              placeholder="Name"
+              placeholder="Username"
               disabled={onlySuperAdmin}
               {...field}
               helperText={error?.message}

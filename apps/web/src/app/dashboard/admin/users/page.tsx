@@ -10,16 +10,25 @@ export default function UserPage() {
   return (
     <>
       <DashboardBreadcrumbs route={dashboardAdminPages.user} />
-      <Link href={dashboardAdminPages.user.path + '/create'} passHref>
-        <Button
-          variant="contained"
-          color="info"
-          startIcon={<AddIcon />}
-          sx={{ mt: 2 }}
-        >
-          User
-        </Button>
-      </Link>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+        <Link href={dashboardAdminPages.user.path + '/create'} passHref>
+          <Button
+            variant="contained"
+            color="info"
+            startIcon={<AddIcon />}
+          >
+            User
+          </Button>
+        </Link>
+        <Link href={dashboardAdminPages.user.path + '/manage-admin'} passHref>
+          <Button
+            variant="contained"
+            color="info"
+          >
+            Manage Admin
+          </Button>
+        </Link>
+      </Box>
       <Box sx={{ maxWidth: '100%', mt: 2 }}>
         <UserListTable />
       </Box>

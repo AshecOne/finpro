@@ -16,10 +16,12 @@ export class AdminController {
 
   async createUser(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log('Data yang diterima:', req.body);
       const body = Validation.validate(UserValidation.CREATE, req.body);
       const response = await AdminService.createUser(body);
       return res.status(201).json(response);
     } catch (error) {
+      console.error('Error creating user:', error);
       next(error);
     }
   }

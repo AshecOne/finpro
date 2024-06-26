@@ -17,7 +17,8 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { UserResponse } from '@/features/admin/users/types';
-import { useGetUsers, useDeleteAdminUser } from '@/features/admin/users/usersQueries';
+import { useGetUsers } from '@/features/admin/users/usersQueries';
+import { useDeleteAdminUser } from '@/features/admin/users/userMutations';
 import { dashboardAdminPages } from '@/utils/routes';
 import ConfirmationDialog, { SelectedRow } from '@/components/dialog/ConfirmationDialog';
 import LinkButton from '@/components/button/LinkButton';
@@ -46,7 +47,7 @@ export default function UserListTable() {
 
   const handleClickOpen = (row: UserResponse) => {
     setOpen(true);
-    setSelectedRow({ id: row.id, name: row.name });
+    setSelectedRow({ id: row.id, name: row.username });
   };
 
   const handleClose = () => {
@@ -56,7 +57,7 @@ export default function UserListTable() {
   const columns = useMemo<MRT_ColumnDef<UserResponse>[]>(
     () => [
       {
-        accessorKey: 'name',
+        accessorKey: 'username',
         header: 'Name',
         enableColumnActions: false,
       },
@@ -159,14 +160,6 @@ export default function UserListTable() {
 
   return (
     <>
-      {user?.role === 'SUPER_ADMIN' && (
-        <LinkButton
-          href={dashboardAdminPages.user.path + '/create'}
-          variant="create"
-        >
-          Create User
-        </LinkButton>
-      )}
       <Box sx={{ maxWidth: '100%', mt: 2 }}>
         <MaterialReactTable table={table} />
       </Box>
