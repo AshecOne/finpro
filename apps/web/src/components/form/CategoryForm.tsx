@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 // MUI Components
 import Box from '@mui/material/Box';
@@ -69,10 +69,15 @@ export default function CategoryForm({
     defaultValues,
   });
 
+  const router = useRouter();
   const session = useSession();
   const user = session.data?.user as UserSession;
   const disabledOnPending = isMutatePending || isQueryPending;
   const onlySuperAdmin = disabledOnPending || user?.role !== 'SUPER_ADMIN';
+
+  useEffect(() => {
+    if (!queryData || isErrorQuery) router.back();
+  }, [queryData, isErrorQuery, router]);
 
   useEffect(() => {
     if (queryData) reset(queryData.result);
