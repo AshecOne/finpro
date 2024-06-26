@@ -1,3 +1,5 @@
+import CategoryIcon from '@mui/icons-material/Category';
+import UserIcon from '@mui/icons-material/Person';
 import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
@@ -34,6 +36,11 @@ export const dashboardAdminPages: Record<string, Route> = {
     path: '/dashboard/admin/products',
     label: 'Product',
     Icon: ShoppingCartOutlinedIcon,
+  },
+  user: {
+    path: '/dashboard/admin/users',
+    label: 'User',
+    Icon: UserIcon,
   },
 };
 

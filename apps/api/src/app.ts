@@ -6,9 +6,10 @@ import { ErrorMiddleware } from '@/middlewares/error.middleware';
 import { SampleRouter } from '@/routers/sample.router';
 import { AuthRouter } from '@/routers/auth.router';
 import { CategoryRouter } from '@/routers/category.router';
-import { UserRouter } from '@/routers/user.router';
-import { AddressRouter } from '@/routers/address.router';
-import { LocationRouter } from '@/routers/location.router';
+import { UserRouter } from './routers/user.router';
+import { AddressRouter } from './routers/address.router';
+import { LocationRouter } from './routers/location.router';
+import { AdminRouter } from './routers/admin.router';
 import { ProductRouter } from '@/routers/product.router';
 
 export default class App {
@@ -38,6 +39,7 @@ export default class App {
     const userRouter = new UserRouter();
     const addressRouter = new AddressRouter();
     const locationRouter = new LocationRouter();
+    const adminRouter = new AdminRouter();
     const productRouter = new ProductRouter();
 
     this.app.get('/', (req: Request, res: Response) => {
@@ -51,6 +53,7 @@ export default class App {
     this.app.use('/users', userRouter.getRouter());
     this.app.use('/addresses', addressRouter.getRouter());
     this.app.use('/locations', locationRouter.getRouter());
+    this.app.use('/admin', adminRouter.getRouter());
     this.app.use('/products', productRouter.getRouter());
   }
 

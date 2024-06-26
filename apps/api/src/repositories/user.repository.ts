@@ -75,4 +75,42 @@ export class UserRepository {
       data,
     });
   }
+
+  static async updateUserById(id: number, data: Prisma.UserUpdateInput) {
+    return await prisma.user.update({
+      where: { id },
+      data,
+    });
+  }
+
+  static async deleteUserById(id: number) {
+    return await prisma.user.delete({ where: { id } });
+  }
+
+  static async getAllUsers(query: any) {
+    const { filter, limit, page, sortBy, orderBy } = query;
+
+    const where = {
+      OR: [{ username: { contains: filter } }, { email: { contains: filter } }],
+    };
+
+    const users = await prisma.user.findMany({
+      where,
+      take: Number(limit) || 10,
+      skip: ((Number(page) || 1) - 1) * (Number(limit) || 10),
+      orderBy: {
+        [sortBy || 'email']: orderBy || 'asc',
+      },
+    });
+
+    return users;
+  }
+
+  static async countUsers(filter: string) {
+    const where = {
+      OR: [{ username: { contains: filter } }, { email: { contains: filter } }],
+    };
+
+    return await prisma.user.count({ where });
+  }
 }

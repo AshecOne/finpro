@@ -233,7 +233,7 @@ export default function Footer() {
               sx={{
                 display: 'flex',
                 justifyContent: { xs: 'center', sm: 'center', md: 'flex-start' },
-                ml: { sm: 2, md: 0 }, // Menambahkan margin kiri untuk selaraskan dengan QR code dan gambar store
+                ml: { sm: 2, md: 0 }, 
               }}
             >
               <SocialIcon href="#">
