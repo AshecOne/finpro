@@ -68,6 +68,7 @@ type ProductFormProps = {
   isQueryPending?: boolean;
   isErrorQuery?: boolean;
   refetchQuery?: () => void;
+  id?: string;
 };
 
 export default function ProductForm({
@@ -78,6 +79,7 @@ export default function ProductForm({
   isErrorQuery,
   isQueryPending,
   refetchQuery,
+  id,
 }: ProductFormProps) {
   const [inputValue, setInputValue] = useState('');
   const [debouncedInputValue] = useDebounce(inputValue, 300);
@@ -92,8 +94,6 @@ export default function ProductForm({
   const user = session.data?.user as UserSession;
   const disabledOnPending = isMutatePending || isQueryPending;
   const onlySuperAdmin = disabledOnPending || user?.role !== 'SUPER_ADMIN';
-  const params = useParams();
-  const id = params.id as string;
 
   const { data, isRefetching } = useGetCategories(
     debouncedInputValue,
@@ -102,8 +102,11 @@ export default function ProductForm({
   );
 
   useEffect(() => {
-    if (!queryData || isErrorQuery) router.back();
-  }, [queryData, isErrorQuery, router]);
+    if (queryData?.success === false && id) {
+      errorNotification(queryData?.message || 'Page not found');
+      router.push(dashboardAdminPages.product.path);
+    }
+  }, [queryData, router, id]);
 
   useEffect(() => {
     if (queryData?.result && id) {
@@ -128,8 +131,7 @@ export default function ProductForm({
 
     const index = files.findIndex((file) => file.id === imageId);
     if (index !== -1) {
-      files.splice(index, 1);
-      setFiles(files);
+      setFiles([...files]);
     } else {
       errorNotification('Something went wrong');
     }
@@ -338,6 +340,7 @@ export function ProductFormUpdate() {
       isQueryPending={isQueryPending}
       isErrorQuery={isErrorQuery}
       refetchQuery={refetchQuery}
+      id={id}
     />
   );
 }

@@ -35,7 +35,10 @@ import {
 } from '@/features/admin/categories/categoriesMutations';
 
 // Utils
-import { errorFetcherNotification } from '@/utils/notifications';
+import {
+  errorFetcherNotification,
+  errorNotification,
+} from '@/utils/notifications';
 
 // Custom Components
 import LinkButton from '@/components/button/LinkButton';
@@ -54,6 +57,7 @@ type CategoryFormProps = {
   errorQuery?: Error | null;
   isQueryPending?: boolean;
   isErrorQuery?: boolean;
+  id?: string;
 };
 
 export default function CategoryForm({
@@ -63,6 +67,7 @@ export default function CategoryForm({
   errorQuery,
   isErrorQuery,
   isQueryPending,
+  id,
 }: CategoryFormProps) {
   const { handleSubmit, control, reset } = useForm<CategoryFormData>({
     resolver: zodResolver(categorySchema),
@@ -76,12 +81,17 @@ export default function CategoryForm({
   const onlySuperAdmin = disabledOnPending || user?.role !== 'SUPER_ADMIN';
 
   useEffect(() => {
-    if (!queryData || isErrorQuery) router.back();
-  }, [queryData, isErrorQuery, router]);
+    if (queryData?.success === false && id) {
+      errorNotification(queryData?.message || 'Page not found');
+      router.push(dashboardAdminPages.category.path);
+    }
+  }, [queryData, router, id]);
 
   useEffect(() => {
-    if (queryData) reset(queryData.result);
-  }, [queryData, reset]);
+    if (queryData?.result && id) {
+      reset(queryData.result);
+    }
+  }, [queryData?.result, reset, id]);
 
   if (isErrorQuery) {
     errorFetcherNotification(errorQuery);

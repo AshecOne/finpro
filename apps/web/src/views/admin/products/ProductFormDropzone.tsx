@@ -24,11 +24,12 @@ import {
   dropzoneContainerStyles,
   dropzoneThumbStyles,
 } from '@/styles/dropzoneStyles';
+import { errorNotification } from '@/utils/notifications';
 
 const maxSize = 1 * 1024 * 1024;
 
 type Props = {
-  id: string;
+  id?: string;
   files: Pictures[];
   setFiles: (data: any) => void;
   refetchQuery: any;
@@ -84,6 +85,20 @@ export default function ProductFormDropzone({
     },
     maxSize,
     disabled,
+    onDropRejected: (files) => {
+      files.forEach((file) => {
+        if (file.errors.length > 0) {
+          file.errors.forEach((err) => {
+            if (err.code === 'file-too-large') {
+              errorNotification('Max file size is 1MB');
+            }
+            if (err.code === 'file-invalid-type') {
+              errorNotification('Invalid file type');
+            }
+          });
+        }
+      });
+    },
   });
 
   const thumbs = files.map((file) => (
